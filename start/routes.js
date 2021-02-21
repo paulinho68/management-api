@@ -17,4 +17,6 @@
 const Route = use('Route')
 
 Route.post('/user/create', 'UserController.store')
+
 Route.post('/session/login', 'SessionController.store')
+Route.post('/session/forgot', 'SessionController.forgotPassword')
