@@ -19,7 +19,7 @@ test('it should return JWT token when session created', async ({ assert, client 
     .create(sessionPayload);
 
   const response = await client
-    .post('/session')
+    .post('/session/login')
     .send(sessionPayload)
     .end();
 
