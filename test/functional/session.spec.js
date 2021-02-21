@@ -3,22 +3,25 @@ const { test, trait } = use('Test/Suite')('Session');
 /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
 const User = use('App/Models/User');
 
+/** @type {import('@adonisjs/lucid/src/Factory')} */
+const Factory = use('Factory')
+
 trait('Test/ApiClient');
 
 test('it should return JWT token when session created', async ({ assert, client }) => {
-  const user = await User.create({
-    name: 'Paulo Vitor',
+  const sessionPayload = {
     email: 'paulovitor2123@gmail.com',
     password: '123456'
-  });
+  };
+
+  const user = await Factory
+    .model('App/Models/User')
+    .create(sessionPayload);
 
   const response = await client
-  .post('/session')
-  .send({
-    email: 'paulovitor2123@gmail.com',
-    password: '123456'
-  })
-  .end();
+    .post('/session')
+    .send(sessionPayload)
+    .end();
 
   response.assertStatus(200);
 

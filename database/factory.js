@@ -10,12 +10,18 @@
 | with dummy data.
 |
 */
+/** @type {import('@adonisjs/framework/src/Hash')} */
+const Hash = use('Hash')
 
 /** @type {import('@adonisjs/lucid/src/Factory')} */
-// const Factory = use('Factory')
+const Factory = use('Factory')
 
-// Factory.blueprint('App/Models/User', (faker) => {
-//   return {
-//     username: faker.username()
-//   }
-// })
+Factory.blueprint('App/Models/User', async (faker, i, data) => {
+  console.log(data);
+  return {
+    user_name: faker.name(),
+    email: faker.email(),
+    password: await Hash.make(faker.string()),
+    ...data
+  }
+})
